@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 
-export const create = async (req: Request, res: Response) => {
-  const data = req.body;
+interface ICidade {
+  nome: string;
+}
 
-  return res.json(data);
+export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
+  const nome = req.body;
+  return res.json(nome);
 };
