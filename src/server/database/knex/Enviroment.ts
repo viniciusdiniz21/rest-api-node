@@ -1,7 +1,7 @@
 import { Knex } from "knex";
 import path from "path";
 
-export const dev: Knex.Config = {
+export const development: Knex.Config = {
   client: "sqlite3",
   useNullAsDefault: true,
   connection: {
@@ -29,10 +29,10 @@ export const dev: Knex.Config = {
 };
 
 export const test: Knex.Config = {
-  ...dev,
+  ...development,
   connection: ":memory:",
 };
 
-export const prod: Knex.Config = {
-  ...dev,
+export const production: Knex.Config = {
+  ...development,
 };
