@@ -16,8 +16,6 @@ export const create = async (
       return result;
     }
     return new Error("Erro ao criar registro");
-
-    return 1;
   } catch (error) {
     console.log(error);
     return new Error("Erro ao criar registro");

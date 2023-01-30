@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as yup from "yup";
+import { cidadesProvider } from "../../database/providers/cidades";
 
 import { validation } from "../../shared/middlewares";
 
@@ -16,6 +17,8 @@ export const deleteByIdValidation = validation((getSchema) => ({
 }));
 
 export const deleteById = async (req: Request<IParamProps>, res: Response) => {
+  const result = await cidadesProvider.deleteById(Number(req.params.id));
+
   if (Number(req.params.id) === 99999)
     return res.status(500).json({
       errors: {
@@ -23,5 +26,5 @@ export const deleteById = async (req: Request<IParamProps>, res: Response) => {
       },
     });
 
-  return res.status(204).send();
+  return res.status(204).send(result);
 };
