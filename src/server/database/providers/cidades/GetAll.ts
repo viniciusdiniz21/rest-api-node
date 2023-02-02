@@ -26,7 +26,7 @@ export const getAll = async (
         return [...result, resultById];
       }
     }
-    return new Error("Erro ao buscar registro");
+    return result;
   } catch (error) {
     return new Error("Erro ao buscar registro");
   }

@@ -3,6 +3,7 @@ import * as getAll from "./GetAll";
 import * as getById from "./GetById";
 import * as updateById from "./UpdateById";
 import * as deleteById from "./DeleteById";
+import * as count from "./Count";
 
 export const cidadesProvider = {
   ...create,
@@ -10,4 +11,5 @@ export const cidadesProvider = {
   ...getById,
   ...updateById,
   ...deleteById,
+  ...count,
 };

@@ -3,6 +3,7 @@ import * as yup from "yup";
 
 import { validation } from "../../shared/middlewares";
 import { ICidade } from "../../database/models";
+import { cidadesProvider } from "../../database/providers/cidades";
 
 interface IParamProps {
   id?: number;
@@ -27,12 +28,25 @@ export const updateById = async (
   req: Request<IParamProps, {}, IBodyProps>,
   res: Response
 ) => {
-  if (Number(req.params.id) === 99999)
-    return res.status(500).json({
+  if (!req.params.id)
+    return res.status(400).json({
       errors: {
-        default: "Registro não encontrado",
+        default: "Id não informado",
       },
     });
+
+  const result = await cidadesProvider.updateById(
+    Number(req.params.id),
+    req.body
+  );
+
+  if (result instanceof Error) {
+    return res.status(500).json({
+      errors: {
+        default: result.message,
+      },
+    });
+  }
 
   return res.status(204).send();
 };

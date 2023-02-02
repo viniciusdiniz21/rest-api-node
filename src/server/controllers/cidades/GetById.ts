@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as yup from "yup";
+import { cidadesProvider } from "../../database/providers/cidades";
 
 import { validation } from "../../shared/middlewares";
 
@@ -16,15 +17,22 @@ export const getByIdValidation = validation((getSchema) => ({
 }));
 
 export const getById = async (req: Request<IParamProps>, res: Response) => {
-  if (Number(req.params.id) === 99999)
-    return res.status(500).json({
+  if (!req.params.id)
+    return res.status(400).json({
       errors: {
-        default: "Registro não encontrado",
+        default: "Id não informado",
       },
     });
 
-  return res.status(200).json({
-    id: req.params.id,
-    nome: "Caxias do Sul",
-  });
+  const result = await cidadesProvider.getById(Number(req.params.id));
+
+  if (result instanceof Error) {
+    return res.status(500).json({
+      errors: {
+        default: result.message,
+      },
+    });
+  }
+
+  return res.status(200).json(result);
 };
